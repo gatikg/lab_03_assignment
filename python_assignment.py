@@ -1,33 +1,69 @@
 import pandas as pd
 
-data = {
-    "Employee ID": ["161E90", "161F91", "161F99", "171E20", "171G30"],
-    "Name": ["Raman", "Himadri", "Jaya", "Tejas", "Ajay"],
-    "Age": [41, 38, 51, 30, 45],
-    "Salary(PM)": [56000, 67500, 82100, 55000, 44000]
-}
-
-df = pd.DataFrame(data)
-
 
 class Employee:
-    def __init__(self, data):
-        self.data = data
+    def __init__(self, employeeid, name, age, salary, df):
+        self.employeeid = employeeid
+        self.name = name
+        self.age = age
+        self.salary = salary
+        self.df = df
+
+    def update_table(self, i):
+        data = {
+            "Employee ID": [self.employeeid],
+            "Name": [self.name],
+            "Age": [self.age],
+            "Salary(PM)": [self.salary]
+        }
+        self.df = pd.DataFrame(data)
+        for j in range(i-1):
+            Employeeid = input("Enter Employee ID:")
+            Name = input("Enter Name:")
+            Age = int(input("Enter Age:"))
+            Salary = int(input("Enter Salary:"))
+            data2 = {
+                "Employee ID": [Employeeid],
+                "Name": [Name],
+                "Age": [Age],
+                "Salary(PM)": [Salary]
+            }
+            df2 = pd.DataFrame(data2)
+            self.df = pd.concat([self.df, df2])
+        return self.df
 
     def sort_age(self):
-        self.sdf = self.data.sort_values(by=["Age"], ascending=True)
+        self.sdf = self.df.sort_values(by=["Age"], ascending=True)
         return self.sdf
 
     def sort_name(self):
-        self.sdf = self.data.sort_values(by=["Name"], ascending=True)
+        self.sdf = self.df.sort_values(by=["Name"], ascending=True)
         return self.sdf
 
     def sort_salary(self):
-        self.sdf = self.data.sort_values(by=["Salary(PM)"], ascending=True)
+        self.sdf = self.df.sort_values(by=["Salary(PM)"], ascending=True)
+        return self.sdf
+
+    def sort_age_decre(self):
+        self.sdf = self.df.sort_values(by=["Age"], ascending=False)
+        return self.sdf
+
+    def sort_name_decre(self):
+        self.sdf = self.df.sort_values(by=["Name"], ascending=False)
+        return self.sdf
+
+    def sort_salary_decre(self):
+        self.sdf = self.df.sort_values(by=["Salary(PM)"], ascending=False)
         return self.sdf
 
 
-ob = Employee(df)
+Employeeid = input("Enter Employee ID:")
+Name = input("Enter Name:")
+Age = int(input("Enter Age:"))
+Salary = int(input("Enter Salary:"))
+ob = Employee(Employeeid, Name, Age, Salary, None)
+print(ob.update_table(5))
+print("\n")
 
 choice = 1
 
@@ -36,6 +72,9 @@ while choice:
     print("1. Age")
     print("2. Name")
     print("3. Salary")
+    print("4. Age Decreasing Order")
+    print("5. Name Decreasing Order")
+    print("6. Salary Descreasing Order")
     choice = int(input("Enter your choice:"))
     if choice == 1:
         print(ob.sort_age())
@@ -43,7 +82,19 @@ while choice:
         print(ob.sort_name())
     elif choice == 3:
         print(ob.sort_salary())
+    elif choice == 4:
+        print(ob.sort_age_decre())
+    elif choice == 5:
+        print(ob.sort_name_decre())
+    elif choice == 6:
+        print(ob.sort_salary_decre())
     elif choice == 0:
         print("Exiting")
     else:
         print("Invalid Option")
+
+# ob = Employee("161E90","Raman",41,56000)
+# ob = Employee("161F91", "Himandri", 38, 67500)
+# ob = Employee("161F99", "Jaya", 51, 82100)
+# ob = Employee("171E20", "Tejas", 30, 55000)
+# ob = Employee("171G30", "Ajay", 45, 44000)
